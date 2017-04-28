@@ -5,10 +5,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.nephriteforksgames.tictactoe3d.GdxGame;
 
 public class DesktopLauncher {
-	public static void main (String[] arg) {
-		//System.setProperty("user.name" , "zurek");
-		//System.out.println( System.getProperty("user.name"). );
-		//System.out.println( System.getProperties() );
+	public static void main (String[] arg)
+	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		System.out.println(config.samples) ;
 		config.samples = 32;
@@ -18,7 +16,6 @@ public class DesktopLauncher {
 		config.width = 800;
 		config.fullscreen = false;
 		config.vSyncEnabled = true;
-		//System.out.println("vSyncEnabled = " + config.vSyncEnabled ) ;
 		
 		new LwjglApplication(new GdxGame(), config);
 	}

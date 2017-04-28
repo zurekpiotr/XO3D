@@ -28,13 +28,21 @@ public class Empty implements Disposable
     static ModelInstance box;
     
     ModelInstance modelinstane;
+    private Vector3 position;
     
-    Empty(Vector3 position)
+    Empty(Vector3 position , float scale)
     {
         modelinstane = new ModelInstance( form );
+        this.position = position;
         
     	modelinstane.transform.set(position, new Quaternion(0, 0, 0, 0));
+    	modelinstane.transform.scale(scale  , scale , scale);
      
+    }
+    
+    Vector3 getPosition()
+    {
+        return position;
     }
     
     static boolean init(AssetManager asset)

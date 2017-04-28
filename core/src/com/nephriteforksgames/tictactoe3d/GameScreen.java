@@ -12,6 +12,9 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.math.Vector3;
+
+import java.security.Key;
 
 /**
  * Created by Żurek on 2017-04-16.
@@ -41,7 +44,8 @@ public class GameScreen implements Screen
         modelBatch = new ModelBatch();
         
         cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(10f, 10f, 10f);
+        //cam = new
+        cam.position.set(10f, 0f, 0f);
         cam.lookAt(0,0,0);
         cam.near = 1f;
         cam.far = 300f;
@@ -60,6 +64,8 @@ public class GameScreen implements Screen
         
         
         
+        
+        
     
     }
     @Override
@@ -71,6 +77,36 @@ public class GameScreen implements Screen
     @Override
     public void render(float delta)
     {
+        if(cube.somebodyWin())
+        {
+        
+        }
+        if(Gdx.input.isKeyPressed(97))
+        {
+            cam.rotateAround( new Vector3(0 , 0 , 0) ,
+                              new Vector3(cam.position.x , cam.position.y, cam.position.z) ,
+                              1f );
+        }
+        if(Gdx.input.isTouched())
+        {
+            float X = Gdx.input.getX();
+            float Y = Gdx.input.getY();
+    
+            cam.rotateAround( new Vector3(0 , 0 , 0) ,
+                              new Vector3(cam.up.x , cam.up.y, cam.up.z) ,
+                              Math.signum(Gdx.input.getDeltaX() * (float) (-Math.sqrt( Math.abs( Gdx.input.getDeltaX() ) ) * 0.5f)));
+            Vector3 vertical = new Vector3(cam.up);
+            vertical.crs(cam.position);
+            cam.rotateAround( new Vector3(0 , 0 , 0) ,
+                              new Vector3(vertical.x , vertical.y, vertical.z) ,
+                              Math.signum(Gdx.input.getDeltaY() * (float) (-Math.sqrt( Math.abs( Gdx.input.getDeltaY() ) ) * 0.5f)));
+    
+        }
+        
+        cam.update();
+        
+        
+        
         
         modelBatch.begin(cam);
         modelBatch.render(cube, environment);
