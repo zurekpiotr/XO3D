@@ -1,5 +1,6 @@
 package com.nephriteforksgames.tictactoe3d;
 
+import android.hardware.Camera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
@@ -27,7 +28,7 @@ public class Cube implements RenderableProvider
             {
                 for(int k = 0 ; k < n ; k ++)
                 {
-                    tab[i][j][k] = new Circle(new Vector3(i*distance -l/2 , j*distance -l/2 , k*distance -l/2) , pointSize);
+                    tab[i][j][k] = new Empty(new Vector3(i*distance -l/2 , j*distance -l/2 , k*distance -l/2) , pointSize);
                 }
             }
         }
@@ -36,21 +37,22 @@ public class Cube implements RenderableProvider
         
     }
     
-    Empty firstAt(Vector3 at , Vector3 v)
+    
+    private boolean fun(Vector3 at, Vector3 v , Vector3 point , float r)
     {
-        
-        return tab[0][0][0];
+        return false;
     }
-    void change(Empty toChange , int player)
+    void changeFirstAt(Vector3 at, Vector3 v , int player)
     {
         if(player == 1)
         {
-            toChange = new Cross(toChange.getPosition() , pointSize);
+            tab[0][0][0]= new Cross(tab[0][0][0].getPosition() , pointSize);
         }
         else if(player == 0)
         {
-            toChange = new Circle(toChange.getPosition() , pointSize);
+            tab[0][0][0] = new Circle(tab[0][0][0].getPosition() , pointSize);
         }
+        System.out.println("change");
     }
     
     boolean somebodyWin()
@@ -67,7 +69,7 @@ public class Cube implements RenderableProvider
             {
                 for(int k = 0 ; k < size ; k ++)
                 {
-                    tab[i][j][k].modelinstane.getRenderables(renderables , pool);
+                    tab[i][j][k].getRenderables(renderables , pool);
                 }
             }
         }
