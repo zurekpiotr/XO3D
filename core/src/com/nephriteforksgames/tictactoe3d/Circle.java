@@ -12,9 +12,9 @@ import com.badlogic.gdx.utils.Pool;
 public class Circle extends Empty
 {
     
-	Circle(Vector3 position)
+	Circle(Vector3 position , float scale)
 	{
-		super(position);
+		super(position , scale);
 		
 	}
 	

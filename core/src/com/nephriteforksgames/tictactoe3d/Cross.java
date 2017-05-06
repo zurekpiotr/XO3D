@@ -11,9 +11,9 @@ import com.badlogic.gdx.math.Vector3;
 public class Cross extends Empty
 {
     
-    Cross(Vector3 position)
+    Cross(Vector3 position , float scale)
     {
-        super(position);
+        super(position ,scale);
     }
     
     static boolean init(AssetManager asset)

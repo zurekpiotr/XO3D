@@ -12,11 +12,14 @@ public class Cube implements RenderableProvider
 {
     Empty tab[][][];
     int size = 0;
+    float pointSize = 0.75f;
+    float distance  = 3f;
+    
     Array<ModelInstance> net;
-   // Array<Renderable> r;
     
     Cube(int n)
     {
+        float l = (n-1) * distance;
         tab = new Empty[n][n][n];
         for(int i = 0 ; i < n ; i ++)
         {
@@ -24,13 +27,35 @@ public class Cube implements RenderableProvider
             {
                 for(int k = 0 ; k < n ; k ++)
                 {
-                    tab[i][j][k] = new Circle(new Vector3(i*2.5f , j*2.5f , k*2.5f));
+                    tab[i][j][k] = new Circle(new Vector3(i*distance -l/2 , j*distance -l/2 , k*distance -l/2) , pointSize);
                 }
             }
         }
         
         size = n;
         
+    }
+    
+    Empty firstAt(Vector3 at , Vector3 v)
+    {
+        
+        return tab[0][0][0];
+    }
+    void change(Empty toChange , int player)
+    {
+        if(player == 1)
+        {
+            toChange = new Cross(toChange.getPosition() , pointSize);
+        }
+        else if(player == 0)
+        {
+            toChange = new Circle(toChange.getPosition() , pointSize);
+        }
+    }
+    
+    boolean somebodyWin()
+    {
+        return false;
     }
     
     @Override
@@ -46,6 +71,5 @@ public class Cube implements RenderableProvider
                 }
             }
         }
-        
     }
 }
