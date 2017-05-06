@@ -73,7 +73,8 @@ public class GameScreen implements Screen
     {
     
     }
-    
+    boolean justrelease = false , moved = false;
+    float firstX = -3.141592f , firstY = -3.141592f;
     @Override
     public void render(float delta)
     {
@@ -87,10 +88,21 @@ public class GameScreen implements Screen
                               new Vector3(cam.position.x , cam.position.y, cam.position.z) ,
                               1f );
         }
+        
+        
         if(Gdx.input.isTouched())
         {
-            float X = Gdx.input.getX();
-            float Y = Gdx.input.getY();
+            if(justrelease == false)
+            {
+                justrelease = true;
+                firstX = Gdx.input.getX();
+                firstY = Gdx.input.getY();
+                moved = false;
+            }
+            else if(firstX != Gdx.input.getX() || firstY != Gdx.input.getY())
+            {
+                moved = true;
+            }
     
             cam.rotateAround( new Vector3(0 , 0 , 0) ,
                               new Vector3(cam.up.x , cam.up.y, cam.up.z) ,
@@ -101,6 +113,17 @@ public class GameScreen implements Screen
                               new Vector3(vertical.x , vertical.y, vertical.z) ,
                               Math.signum(Gdx.input.getDeltaY() * (float) (-Math.sqrt( Math.abs( Gdx.input.getDeltaY() ) ) * 0.5f)));
     
+        }
+        else if(justrelease)
+        {
+            justrelease = false;
+            if(moved == false)
+            {
+                System.out.println("" + firstX + "   " + firstY);
+                Vector3 temp = cam.unproject(new Vector3(firstX , firstY , 0));
+                System.out.println("" + temp);
+                cube.changeFirstAt(cam.position , temp , 1);
+            }
         }
         
         cam.update();

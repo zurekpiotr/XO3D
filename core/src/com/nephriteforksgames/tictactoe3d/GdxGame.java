@@ -10,7 +10,7 @@ public class GdxGame extends Game
     @Override
     public void create()
     {
-        setScreen( new GameScreen(4) );
+        setScreen( new GameScreen(3) );
     }
     
     @Override
