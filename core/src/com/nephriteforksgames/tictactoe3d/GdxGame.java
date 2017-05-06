@@ -10,6 +10,7 @@ public class GdxGame extends Game
     @Override
     public void create()
     {
+        Assets.init();
         setScreen( new GameScreen(3) );
     }
     

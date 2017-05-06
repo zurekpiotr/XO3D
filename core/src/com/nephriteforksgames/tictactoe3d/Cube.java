@@ -1,6 +1,5 @@
 package com.nephriteforksgames.tictactoe3d;
 
-import android.hardware.Camera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
@@ -58,7 +57,6 @@ public class Cube implements RenderableProvider
         int t[][] = {{0,1,2,3} , {2,3,7,6} , {1,2,6,5} , {0,1,5,4} , {4,5,6,7} , {0,3,7,4}};
         for(i = 0 ; i< 6 ; i++)
         {
-            System.err.println(i);
             plane = new Plane(node[t[i][0]], node[t[i][1]], node[t[i][2]]);
             if (Intersector.intersectLinePlane(at.x, at.y, at.z, v.x, v.y, v.z, plane, out) >= 0)
             {
@@ -66,7 +64,7 @@ public class Cube implements RenderableProvider
                 {
                     return true;
                 }
-                if (Intersector.isPointInTriangle(out, node[t[i][1]], node[t[i][2]], node[t[i][3]] ))
+                if (Intersector.isPointInTriangle(out, node[t[i][0]], node[t[i][2]], node[t[i][3]] ))
                 {
                     return true;
                 }
@@ -75,7 +73,15 @@ public class Cube implements RenderableProvider
         
         return false;
     }
-    void changeFirstAt(Vector3 at, Vector3 v , int player)
+    
+    /**
+     *
+     * @param at
+     * @param v
+     * @param player
+     * @return true if change something
+     */
+    boolean changeFirstAt(Vector3 at, Vector3 v , int player)
     {
     
         for(int i = 0 ; i < size ; i ++)
@@ -94,13 +100,12 @@ public class Cube implements RenderableProvider
                         {
                             tab[i][j][k] = new Circle(tab[i][j][k].getPosition() , pointSize);
                         }
+                        return true;
                     }
                 }
             }
         }
-        
-       
-        System.out.println("change");
+        return false;
     }
     
     boolean somebodyWin()
