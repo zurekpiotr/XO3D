@@ -24,27 +24,21 @@ public class GameScreen implements Screen
     PerspectiveCamera cam;
     Environment environment;
     ModelBatch modelBatch;
-    AssetManager assets ;
+    int player = 0;
+    
     
     Cube cube;
     
     GameScreen(int cubeSize)
     {
-        assets = new AssetManager();
-    
-        assets.load("circle.obj" , Model.class);
-        assets.load("Well.obj" , Model.class);
-    
-        assets.finishLoading();
-        
-        Empty.init(assets);
-        Cross.init(assets);
-        Circle.init(assets);
+        Empty.init(Assets.assets);
+        Cross.init(Assets.assets);
+        Circle.init(Assets.assets);
         
         modelBatch = new ModelBatch();
         
         cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //cam = new
+        
         cam.position.set(10f, 0f, 0f);
         cam.lookAt(0,0,0);
         cam.near = 1f;
@@ -57,16 +51,6 @@ public class GameScreen implements Screen
         
         cube = new Cube(cubeSize);
         
-        
-        
-        //assets.update();
-        System.out.println( assets.isLoaded("Cross.obj" , Model.class) );
-        
-        
-        
-        
-        
-    
     }
     @Override
     public void show()
@@ -119,17 +103,16 @@ public class GameScreen implements Screen
             justrelease = false;
             if(moved == false)
             {
-                System.out.println("" + firstX + "   " + firstY);
                 Vector3 temp = cam.unproject(new Vector3(firstX , firstY , 0));
-                System.out.println("" + temp);
-                cube.changeFirstAt(cam.position , temp , 1);
+                if( cube.changeFirstAt(cam.position , temp , player ) )
+                {
+                    player++;
+                    player%=2;
+                }
             }
         }
         
         cam.update();
-        
-        
-        
         
         modelBatch.begin(cam);
         modelBatch.render(cube, environment);
@@ -163,6 +146,6 @@ public class GameScreen implements Screen
     @Override
     public void dispose()
     {
-    	assets.dispose();
+    
     }
 }

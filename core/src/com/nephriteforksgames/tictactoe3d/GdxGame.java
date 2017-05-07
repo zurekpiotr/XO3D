@@ -13,6 +13,7 @@ public class GdxGame extends Game
     {
         swapscreen=false;
         setScreen( new MenuScreen() );
+        Assets.init();
     }
     
     @Override
