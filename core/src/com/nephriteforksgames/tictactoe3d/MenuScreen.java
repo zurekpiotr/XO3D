@@ -32,7 +32,8 @@ public class MenuScreen implements Screen
         int row_height = Gdx.graphics.getWidth() / 7;
         int col_width = Gdx.graphics.getWidth() / 7;
 
-        mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        //mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        mySkin = Assets.assets.get("skin/glassy-ui.json" , Skin.class);
 
         startbutton = new TextButton("START",mySkin,"default");
         upbutton = new TextButton( ">",mySkin,"default" );
@@ -44,9 +45,8 @@ public class MenuScreen implements Screen
         startbutton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                GdxGame.swapscreen=true;
-                GdxGame.size=size;
                 dispose();
+                GdxGame.changeScreenTo(new GameScreen(size));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

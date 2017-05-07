@@ -15,24 +15,25 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
 
-public class Circle extends Empty
+public class Circle extends Point
 {
-    
+    private static Model form;
 	Circle(Vector3 position , float size)
 	{
-		super(position , size);
-        meshModel = new ModelInstance(new ModelBuilder().createBox(2*size, 2*size, 2*size, new Material(ColorAttribute.createDiffuse(Color.RED)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal));
-        meshModel.transform.set(position , new Quaternion(0 , 0 , 0, 0));
+        modelinstane = new ModelInstance(form);
+        this.position = position;
+        
+        modelinstane.transform.set(position, new Quaternion(0, 0, 0, 0));
+        modelinstane.transform.scale(size, size, size);
+        
+        
 	}
 	
-    static boolean init(AssetManager asset)
+    static boolean init()
     {
         boolean flag = true;
         
-        form = asset.get("circle.obj", Model.class);
-        
-        
-        inst = new ModelInstance(form);
+        Circle.form = Assets.assets.get("circle.obj", Model.class);
         
         return flag;
     }
@@ -42,4 +43,5 @@ public class Circle extends Empty
     {
     
     }
+    
 }
