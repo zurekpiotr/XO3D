@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -32,7 +34,8 @@ public class MenuScreen implements Screen
         int row_height = Gdx.graphics.getWidth() / 7;
         int col_width = Gdx.graphics.getWidth() / 7;
 
-        mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        //mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+        mySkin = Assets.assets.get("skin/glassy-ui.json" , Skin.class);
 
         startbutton = new TextButton("START",mySkin,"default");
         upbutton = new TextButton( ">",mySkin,"default" );
@@ -44,9 +47,8 @@ public class MenuScreen implements Screen
         startbutton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                GdxGame.swapscreen=true;
-                GdxGame.size=size;
                 dispose();
+                GdxGame.changeScreenTo(new GameScreen(size));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -83,7 +85,6 @@ public class MenuScreen implements Screen
         });
         sizebutton.setSize(col_width,row_height);
         sizebutton.setPosition(Gdx.graphics.getWidth()/2-col_width/2,Gdx.graphics.getHeight()-row_height*4);
-
         stage.addActor(startbutton);
         stage.addActor(upbutton);
         stage.addActor(downbutton);
