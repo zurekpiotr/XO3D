@@ -31,9 +31,9 @@ public class GameScreen implements Screen
     
     GameScreen(int cubeSize)
     {
-        Empty.init(Assets.assets);
-        Cross.init(Assets.assets);
-        Circle.init(Assets.assets);
+        Empty.init();
+        Cross.init();
+        Circle.init();
         
         modelBatch = new ModelBatch();
         
@@ -62,9 +62,9 @@ public class GameScreen implements Screen
     @Override
     public void render(float delta)
     {
-        if(cube.somebodyWin())
+        if(cube.somebodyWin() != -1)
         {
-        
+            GdxGame.changeScreenTo( new EndScreen(cube.somebodyWin()));
         }
         if(Gdx.input.isKeyPressed(97))
         {
@@ -90,12 +90,12 @@ public class GameScreen implements Screen
     
             cam.rotateAround( new Vector3(0 , 0 , 0) ,
                               new Vector3(cam.up.x , cam.up.y, cam.up.z) ,
-                              Math.signum(Gdx.input.getDeltaX() * (float) (-Math.sqrt( Math.abs( Gdx.input.getDeltaX() ) ) * 0.5f)));
+                              Gdx.input.getDeltaX()* -0.25f);
             Vector3 vertical = new Vector3(cam.up);
             vertical.crs(cam.position);
             cam.rotateAround( new Vector3(0 , 0 , 0) ,
                               new Vector3(vertical.x , vertical.y, vertical.z) ,
-                              Math.signum(Gdx.input.getDeltaY() * (float) (-Math.sqrt( Math.abs( Gdx.input.getDeltaY() ) ) * 0.5f)));
+                               Gdx.input.getDeltaY()  * -0.25f);
     
         }
         else if(justrelease)
