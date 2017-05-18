@@ -13,7 +13,9 @@ import com.badlogic.gdx.utils.Pool;
 public class Cube implements RenderableProvider
 {
     Point tab[][][];
+
     static int size = 0;
+
     float pointSize = 0.75f;
     float distance = 2f;
     

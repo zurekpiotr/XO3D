@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class GdxGame extends Game
 {
+<<<<<<< HEAD
+=======
+    static boolean swapscreen;
+    static int size;
+>>>>>>> origin/master
     static void changeScreenTo(Screen a)
     {
         wsk.setScreen(a);
@@ -18,6 +23,10 @@ public class GdxGame extends Game
         Assets.init();
         wsk = this;
         setScreen( new MenuScreen() );
+<<<<<<< HEAD
+=======
+        
+>>>>>>> origin/master
     }
     
     @Override
