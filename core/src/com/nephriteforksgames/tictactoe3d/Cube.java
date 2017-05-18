@@ -13,7 +13,9 @@ import com.badlogic.gdx.utils.Pool;
 public class Cube implements RenderableProvider
 {
     Point tab[][][];
-    int size = 0;
+
+    static int size = 0;
+
     float pointSize = 0.75f;
     float distance = 2f;
     
@@ -116,10 +118,12 @@ public class Cube implements RenderableProvider
             if (player == 1)
             {
                 tab[a][b][c] = new Cross(tab[a][b][c].getPosition(), pointSize);
+                Logic.AddPoint( a,b,c,player );
             }
             else if (player == 0)
             {
                 tab[a][b][c] = new Circle(tab[a][b][c].getPosition(), pointSize);
+                Logic.AddPoint( a,b,c,player );
             }
             return true;
         }

@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -83,7 +85,6 @@ public class MenuScreen implements Screen
         });
         sizebutton.setSize(col_width,row_height);
         sizebutton.setPosition(Gdx.graphics.getWidth()/2-col_width/2,Gdx.graphics.getHeight()-row_height*4);
-
         stage.addActor(startbutton);
         stage.addActor(upbutton);
         stage.addActor(downbutton);
