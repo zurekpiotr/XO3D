@@ -4,6 +4,7 @@ package com.nephriteforksgames.tictactoe3d;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -50,7 +51,7 @@ public class GameScreen implements Screen
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
         
         cube = new Cube(cubeSize);
-        
+        HUD.initialize();
     }
     @Override
     public void show()
@@ -74,49 +75,51 @@ public class GameScreen implements Screen
         }
         
         
-        if(Gdx.input.isTouched())
-        {
-            if(justrelease == false)
-            {
-                justrelease = true;
-                firstX = Gdx.input.getX();
-                firstY = Gdx.input.getY();
-                moved = false;
+        if(Gdx.input.isTouched()) {
+            if (!HUD.slider.isDragging()) {
+                if (justrelease == false) {
+                    justrelease = true;
+                    firstX = Gdx.input.getX();
+                    firstY = Gdx.input.getY();
+                    moved = false;
+                } else if (firstX != Gdx.input.getX() || firstY != Gdx.input.getY()) {
+                    moved = true;
+                }
+
+                cam.rotateAround( new Vector3( 0, 0, 0 ),
+                        new Vector3( cam.up.x, cam.up.y, cam.up.z ),
+                        Gdx.input.getDeltaX() * -0.25f );
+                Vector3 vertical = new Vector3( cam.up );
+                vertical.crs( cam.position );
+                cam.rotateAround( new Vector3( 0, 0, 0 ),
+                        new Vector3( vertical.x, vertical.y, vertical.z ),
+                        Gdx.input.getDeltaY() * -0.25f );
+
             }
-            else if(firstX != Gdx.input.getX() || firstY != Gdx.input.getY())
-            {
-                moved = true;
-            }
-    
-            cam.rotateAround( new Vector3(0 , 0 , 0) ,
-                              new Vector3(cam.up.x , cam.up.y, cam.up.z) ,
-                              Gdx.input.getDeltaX()* -0.25f);
-            Vector3 vertical = new Vector3(cam.up);
-            vertical.crs(cam.position);
-            cam.rotateAround( new Vector3(0 , 0 , 0) ,
-                              new Vector3(vertical.x , vertical.y, vertical.z) ,
-                               Gdx.input.getDeltaY()  * -0.25f);
-    
         }
-        else if(justrelease)
-        {
-            justrelease = false;
-            if(moved == false)
+            else if(justrelease)
             {
-                Vector3 temp = cam.unproject(new Vector3(firstX , firstY , 0));
-                if( cube.changeFirstAt(cam.position , temp , player ) )
+                justrelease = false;
+                if(moved == false)
                 {
-                    player++;
-                    player%=2;
+                    Vector3 temp = cam.unproject(new Vector3(firstX , firstY , 0));
+                    if( cube.changeFirstAt(cam.position , temp , player ) )
+                    {
+                        player++;
+                        player%=2;
+                    }
                 }
             }
-        }
+
+
         
         cam.update();
         
         modelBatch.begin(cam);
         modelBatch.render(cube, environment);
         modelBatch.end();
+
+        HUD.render();
     }
     
     @Override

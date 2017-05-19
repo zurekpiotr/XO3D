@@ -20,6 +20,8 @@ public class Cube implements RenderableProvider
     
     Cube(int n)
     {
+        size = n;
+        Logic.StartGame(size);
         float l = (n - 1) * distance;
         tab = new Point[n][n][n];
         for (int i = 0; i < n; i++)
@@ -32,8 +34,6 @@ public class Cube implements RenderableProvider
                 }
             }
         }
-        
-        size = n;
         
     }
     
