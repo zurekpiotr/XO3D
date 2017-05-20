@@ -18,10 +18,12 @@ public class Cube implements RenderableProvider
 
     float pointSize = 0.75f;
     float distance = 2f;
+    int player = 0;
     
     
-    Cube(int n)
+    Cube(int n , int whoStart)
     {
+        player = whoStart;
         float l = (n - 1) * distance;
         tab = new Point[n][n][n];
         for (int i = 0; i < n; i++)
@@ -80,10 +82,9 @@ public class Cube implements RenderableProvider
      *
      * @param at
      * @param v
-     * @param player
      * @return true if change something
      */
-    boolean changeFirstAt(Vector3 at, Vector3 v, int player)
+    boolean changeFirstAt(Vector3 at, Vector3 v)
     {
         int a = 0, b = 0, c = 0;
         float len = 1000000;
@@ -114,17 +115,7 @@ public class Cube implements RenderableProvider
         }
         if (found)
         {
-            
-            if (player == 1)
-            {
-                tab[a][b][c] = new Cross(tab[a][b][c].getPosition(), pointSize);
-                Logic.AddPoint( a,b,c,player );
-            }
-            else if (player == 0)
-            {
-                tab[a][b][c] = new Circle(tab[a][b][c].getPosition(), pointSize);
-                Logic.AddPoint( a,b,c,player );
-            }
+            change(a,b,c);
             return true;
         }
         else
@@ -134,6 +125,23 @@ public class Cube implements RenderableProvider
         
         
     }
+    
+    void change( int  x , int y , int z )
+    {
+    
+        if (player == 1)
+        {
+            tab[x][y][z] = new Cross(tab[x][y][z].getPosition(), pointSize);
+        }
+        else if (player == 0)
+        {
+            tab[x][y][z] = new Circle(tab[x][y][z].getPosition(), pointSize);
+        }
+        
+        player++;
+        player%=2;
+    }
+    
     
     /**
      * @return 0 or 1 if someone win

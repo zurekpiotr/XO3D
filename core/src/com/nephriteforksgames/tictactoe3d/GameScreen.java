@@ -29,7 +29,7 @@ public class GameScreen implements Screen
     
     Cube cube;
     
-    GameScreen(int cubeSize)
+    GameScreen(int cubeSize , int whoStart)
     {
         Empty.init();
         Cross.init();
@@ -49,7 +49,7 @@ public class GameScreen implements Screen
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
         
-        cube = new Cube(cubeSize);
+        cube = new Cube(cubeSize , whoStart);
         
     }
     @Override
@@ -104,11 +104,8 @@ public class GameScreen implements Screen
             if(moved == false)
             {
                 Vector3 temp = cam.unproject(new Vector3(firstX , firstY , 0));
-                if( cube.changeFirstAt(cam.position , temp , player ) )
-                {
-                    player++;
-                    player%=2;
-                }
+                cube.changeFirstAt(cam.position , temp ) ;
+                
             }
         }
         
