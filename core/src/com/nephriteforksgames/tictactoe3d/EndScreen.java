@@ -71,7 +71,7 @@ public class EndScreen implements Screen
         stage.act();
         stage.draw();
         
-        GdxGame.changeScreenTo(new MenuScreen());
+        //GdxGame.changeScreenTo(new MenuScreen());
         
     }
     

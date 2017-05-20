@@ -142,7 +142,7 @@ public class Cube implements RenderableProvider
         {
             tab[x][y][z] = new Circle(tab[x][y][z].getPosition(), pointSize);
         }
-        
+        Logic.AddPoint( x,y,z,player );
         player++;
         player%=2;
     }

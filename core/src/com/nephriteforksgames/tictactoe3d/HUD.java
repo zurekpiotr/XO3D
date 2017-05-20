@@ -24,8 +24,9 @@ class HUD {
         left=new TextButton( "",mySkin );
         right=new TextButton( "",mySkin );
         slider=new Slider( 0f,200f,1f,true,mySkin );
-        slider.setSize( slider.getWidth(),Gdx.graphics.getHeight()-row_height );
+        slider.setSize( (float) (slider.getWidth()*1.5),Gdx.graphics.getHeight()-row_height );
         slider.setPosition( col_width/4,row_height/2 );
+        slider.setValue( 200f );
         left.setPosition( col_width,row_height/2 );
         left.setSize( col_width,row_height );
         right.setPosition( Gdx.graphics.getWidth()-col_width*2,row_height/2 );
@@ -37,6 +38,9 @@ class HUD {
     static void render(){
         stage.act();
         stage.draw();
+    }
+    static void finish(){
+        stage.dispose();
     }
     static float get_slider_ratio(){
         return slider.getPercent();
