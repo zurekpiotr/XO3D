@@ -9,13 +9,13 @@ public class DesktopLauncher {
 	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		System.out.println(config.samples) ;
-		config.samples = 32;
-		config.overrideDensity = -1;
+		//config.samples = 1;
+		//config.overrideDensity = -1;
 		config.resizable = false;
 		config.height = 600;
 		config.width = 800;
 		config.fullscreen = false;
-		config.vSyncEnabled = true;
+		config.vSyncEnabled = false;
 		
 		new LwjglApplication(new GdxGame(), config);
 	}

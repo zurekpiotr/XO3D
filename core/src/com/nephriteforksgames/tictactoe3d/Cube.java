@@ -13,15 +13,23 @@ import com.badlogic.gdx.utils.Pool;
 public class Cube implements RenderableProvider
 {
     Point tab[][][];
+
     static int size = 0;
+
     float pointSize = 0.75f;
     float distance = 2f;
+    int player = 0;
+    int fromX , toX , fromY ,toY , fromZ , toZ;
+    Vector3 position = new Vector3(0,0,0);
     
-    
-    Cube(int n)
+    Cube(int n , int whoStart)
     {
         size = n;
+        
         Logic.StartGame(size);
+        
+        player = whoStart;
+        
         float l = (n - 1) * distance;
         tab = new Point[n][n][n];
         for (int i = 0; i < n; i++)
@@ -30,10 +38,11 @@ public class Cube implements RenderableProvider
             {
                 for (int k = 0; k < n; k++)
                 {
-                    tab[i][j][k] = new Empty(new Vector3(i * distance - l / 2, j * distance - l / 2, k * distance - l / 2), pointSize);
+                    tab[i][j][k] = new Empty(new Vector3(k * distance - l / 2, j * distance - l / 2, i * distance - l / 2), pointSize);
                 }
             }
         }
+        changeVisionRange( 0, size , 0 , size , 0 , size);
         
     }
     
@@ -78,19 +87,18 @@ public class Cube implements RenderableProvider
      *
      * @param at
      * @param v
-     * @param player
      * @return true if change something
      */
-    boolean changeFirstAt(Vector3 at, Vector3 v, int player)
+    boolean changeFirstAt(Vector3 at, Vector3 v)
     {
         int a = 0, b = 0, c = 0;
         float len = 1000000;
         boolean found = false;
-        for (int i = 0; i < size; i++)
+        for (int i = fromZ; i < toZ; i++)
         {
-            for (int j = 0; j < size; j++)
+            for (int j = fromY; j < toY; j++)
             {
-                for (int k = 0; k < size; k++)
+                for (int k = fromX; k < toX; k++)
                 {
                     if(tab[i][j][k] instanceof Circle || tab[i][j][k] instanceof Cross)continue;
                     if (fun(at, v, tab[i][j][k]))
@@ -112,17 +120,7 @@ public class Cube implements RenderableProvider
         }
         if (found)
         {
-            
-            if (player == 1)
-            {
-                tab[a][b][c] = new Cross(tab[a][b][c].getPosition(), pointSize);
-                Logic.AddPoint( a,b,c,player );
-            }
-            else if (player == 0)
-            {
-                tab[a][b][c] = new Circle(tab[a][b][c].getPosition(), pointSize);
-                Logic.AddPoint( a,b,c,player );
-            }
+            change(a,b,c);
             return true;
         }
         else
@@ -132,6 +130,68 @@ public class Cube implements RenderableProvider
         
         
     }
+    
+    void change( int  x , int y , int z )
+    {
+    
+        if (player == 1)
+        {
+            tab[x][y][z] = new Cross(tab[x][y][z].getPosition(), pointSize);
+        }
+        else if (player == 0)
+        {
+            tab[x][y][z] = new Circle(tab[x][y][z].getPosition(), pointSize);
+        }
+        
+        player++;
+        player%=2;
+    }
+    
+    char whoseRound()
+    {
+        if(player == 1)return 'x';
+        else return 'o';
+    }
+    
+    void changeVisionRange(int fromX , int toX , int fromY , int toY , int fromZ , int toZ )
+    {
+        this.fromX = fromX;
+        this.toX = toX;
+        this.fromY = fromY;
+        this.toY = toY;
+        this.fromZ = fromZ;
+        this.toZ = toZ;
+    }
+    void changeVisionRange(Vector3 lookFrom , float percent)
+    {
+        int ile = size - ((int) ((float)size * percent*0.99f)+1);
+        Vector3 pom = new Vector3(lookFrom);
+        System.err.print(pom);
+        
+        pom.sub(position);
+        System.err.println("   "+pom);
+        
+        float absX = Math.abs(pom.x);
+        float absY = Math.abs(pom.y);
+        float absZ = Math.abs(pom.z);
+        
+        if(absX > absY && absX > absZ)
+        {
+            if(pom.x>0)changeVisionRange( 0 , size-ile , 0 , size , 0 , size);
+            else changeVisionRange( 0+ile , size , 0 , size , 0 , size);
+        }
+        if(absY > absX && absY > absZ)
+        {
+            if(pom.y>0)changeVisionRange( 0 , size , 0 , size-ile , 0 , size);
+            else changeVisionRange( 0 , size , 0+ile , size , 0 , size);
+        }
+        if(absZ > absX && absZ > absY)
+        {
+            if(pom.z>0)changeVisionRange( 0 , size , 0 , size , 0 , size-ile);
+            else changeVisionRange( 0 , size , 0 , size , 0+ile , size);
+        }
+    }
+    
     
     /**
      * @return 0 or 1 if someone win
@@ -145,13 +205,14 @@ public class Cube implements RenderableProvider
     @Override
     public void getRenderables(Array<Renderable> renderables, Pool<Renderable> pool)
     {
-        for (int i = 0; i < size; i++)
+        
+        for (int z = fromZ; z < toZ; z++)
         {
-            for (int j = 0; j < size; j++)
+            for (int y = fromY; y < toY; y++)
             {
-                for (int k = 0; k < size; k++)
+                for (int x = fromX; x < toX; x++)
                 {
-                    tab[i][j][k].getRenderables(renderables, pool);
+                    tab[z][y][x].getRenderables(renderables, pool);
                 }
             }
         }
