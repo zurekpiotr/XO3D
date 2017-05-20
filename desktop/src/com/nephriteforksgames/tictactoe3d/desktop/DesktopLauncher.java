@@ -9,7 +9,7 @@ public class DesktopLauncher {
 	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		System.out.println(config.samples) ;
-		config.samples = 32;
+		config.samples = 1;
 		config.overrideDensity = -1;
 		config.resizable = false;
 		config.height = 600;

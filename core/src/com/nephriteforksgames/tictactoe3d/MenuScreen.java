@@ -25,6 +25,7 @@ public class MenuScreen implements Screen
     final TextButton upbutton;
     final TextButton downbutton;
     final TextButton sizebutton;
+    int whoStart = 0;  /// !!!
     int size;
     MenuScreen(){
         size=3;
@@ -48,7 +49,7 @@ public class MenuScreen implements Screen
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 dispose();
-                GdxGame.changeScreenTo(new GameScreen(size));
+                GdxGame.changeScreenTo(new GameScreen(size , whoStart));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
