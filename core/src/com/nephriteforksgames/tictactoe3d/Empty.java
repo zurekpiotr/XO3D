@@ -24,7 +24,7 @@ public class Empty extends Point
         modelinstane = new ModelInstance(form);
         
         modelinstane.materials.get(0).set(new ColorAttribute(ColorAttribute.Diffuse, 0f, 0f, 0f, 1f));
-        modelinstane.materials.get(0).set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, 0.1f));
+        modelinstane.materials.get(0).set(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, 0.2f));
         
         modelinstane.transform.set(position, new Quaternion(0, 0, 0, 0));
         modelinstane.transform.scale(size, size, size);

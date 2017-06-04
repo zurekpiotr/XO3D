@@ -13,6 +13,72 @@ class Logic {
         diagonal_results=new int[3][2][size];
         big_diagonal=new int[4];
     }
+    static void chceckDiagonal(int x,int y,int z,int a,int b,int c,int diagonal,int player){
+        switch (diagonal){
+            case 0:{
+                while(c>=0){
+                    if(x==a&&y==b&&z==c){
+                        if(player==1)
+                        big_diagonal[diagonal]++;
+                        else
+                        big_diagonal[diagonal]--;
+                        break;
+                    }
+                    c--;
+                    a++;
+                    b++;
+                }
+                break;
+            }
+            case 1:{
+                while(c>=0){
+                    if(x==a&&y==b&&z==c){
+                        if(player==1)
+                            big_diagonal[diagonal]++;
+                        else
+                            big_diagonal[diagonal]--;
+                        break;
+                    }
+                    c--;
+                    a++;
+                    b--;
+                }
+                break;
+            }
+            case 2:{
+                while(c>=0){
+                    if(x==a&&y==b&&z==c){
+                        if(player==1)
+                            big_diagonal[diagonal]++;
+                        else
+                            big_diagonal[diagonal]--;
+                        break;
+                    }
+                    c--;
+                    a--;
+                    b--;
+                }
+                break;
+            }
+            case 3:{
+                while(c>=0){
+                    if(x==a&&y==b&&z==c){
+                        if(player==1)
+                            big_diagonal[diagonal]++;
+                        else
+                            big_diagonal[diagonal]--;
+                        break;
+                    }
+                    c--;
+                    a--;
+                    b++;
+                }
+                break;
+            }
+
+
+        }
+    }
     static void AddPoint(int x, int y, int z, int player){
         coordinates[0]=x;
         coordinates[1]=y;
@@ -37,9 +103,10 @@ class Logic {
                     }
                 }
             }
-            if(x==y&&y==z){
-                big_diagonal[0]++;
-            }
+            chceckDiagonal( x,y,z,0,0,size-1,0,player );
+            chceckDiagonal( x,y,z,0,size-1,size-1,1,player );
+            chceckDiagonal( x,y,z,size-1,size-1,size-1,2,player );
+            chceckDiagonal( x,y,z,size-1,0,size-1,3,player );
         }
         else{
             results[0][x][y]--;
@@ -61,10 +128,14 @@ class Logic {
                     }
                 }
             }
+            chceckDiagonal( x,y,z,0,0,size-1,0,player );
+            chceckDiagonal( x,y,z,0,size-1,size-1,1,player );
+            chceckDiagonal( x,y,z,size-1,size-1,size-1,2,player );
+            chceckDiagonal( x,y,z,size-1,0,size-1,3,player );
         }
         CheckWin(x,y,z,player);
     }
-    static void CheckWin(int x, int y, int z, int player){
+    private static void CheckWin(int x, int y, int z, int player){
         if(player==0){
             if(results[0][x][y]==-size||results[1][x][z]==-size||results[2][y][z]==-size){
                 GdxGame.changeScreenTo(new EndScreen(player));
@@ -77,6 +148,10 @@ class Logic {
                         }
                     }
                 }
+            }
+            for(int i=0;i<4;i++){
+                if(big_diagonal[i]==-size)
+                    GdxGame.changeScreenTo(new EndScreen(0));
             }
         }
         else {
@@ -91,6 +166,10 @@ class Logic {
                         }
                     }
                 }
+            }
+            for(int i=0;i<4;i++){
+                if(big_diagonal[i]==size)
+                    GdxGame.changeScreenTo(new EndScreen(1));
             }
         }
     }
