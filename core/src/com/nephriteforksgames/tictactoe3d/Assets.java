@@ -15,8 +15,9 @@ public class Assets
     {
         assets = new AssetManager();
     
-        assets.load("circle.obj" , Model.class);
-        assets.load("plus.obj" , Model.class);
+        assets.load("CircleModel.obj" , Model.class);
+        assets.load("CrossModel.obj" , Model.class);
+        assets.load("EmptyModel2.obj" , Model.class);
         assets.load("skin/glassy-ui.json" , Skin.class);
         assets.finishLoading();
     }

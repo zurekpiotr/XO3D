@@ -33,7 +33,7 @@ public class Circle extends Point
     {
         boolean flag = true;
         
-        Circle.form = Assets.assets.get("circle.obj", Model.class);
+        Circle.form = Assets.assets.get("CircleModel.obj", Model.class);
         
         return flag;
     }
