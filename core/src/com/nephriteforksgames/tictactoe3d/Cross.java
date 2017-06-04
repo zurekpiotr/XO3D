@@ -2,11 +2,13 @@ package com.nephriteforksgames.tictactoe3d;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Quaternion;
@@ -27,14 +29,13 @@ public class Cross extends Point
     
         modelinstane.transform.set(position, new Quaternion(0, 0, 0, 0));
         modelinstane.transform.scale(size, size, size);
-    
     }
     
     static boolean init()
     {
         boolean flag = true;
         
-        Cross.form = Assets.assets.get("plus.obj", Model.class);
+        Cross.form = Assets.assets.get("CrossModel.obj", Model.class);
         
         return flag;
     }

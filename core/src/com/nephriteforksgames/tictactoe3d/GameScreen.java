@@ -24,6 +24,7 @@ public class GameScreen implements Screen
     Cube cube;
     boolean justrelease = false, moved = false;
     float firstX = -3.141592f, firstY = -3.141592f;
+    DirectionalLight light;
     
     GameScreen(int cubeSize, int whoStart)
     {
@@ -43,7 +44,8 @@ public class GameScreen implements Screen
         
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+        light =new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f);
+        environment.add(light);
         
         HUD.initialize();
         
@@ -69,6 +71,7 @@ public class GameScreen implements Screen
             cam.rotateAround(new Vector3(0, 0, 0),
                              new Vector3(cam.position.x, cam.position.y, cam.position.z),
                              1f);
+           
         }
         
         
@@ -116,7 +119,9 @@ public class GameScreen implements Screen
         
         cam.update();
         cube.changeVisionRange(cam.position , HUD.get_slider_ratio());
+        light.setDirection(new Vector3().sub(cam.position));
         
+     
         modelBatch.begin(cam);
         modelBatch.render(cube, environment);
         modelBatch.end();

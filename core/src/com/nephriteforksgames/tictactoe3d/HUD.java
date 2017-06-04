@@ -21,18 +21,18 @@ class HUD {
         int col_width = Gdx.graphics.getWidth() / 7;
 
         mySkin = Assets.assets.get("skin/glassy-ui.json" , Skin.class);
-        left=new TextButton( "",mySkin );
-        right=new TextButton( "",mySkin );
+        //left=new TextButton( "",mySkin );
+        //right=new TextButton( "",mySkin );
         slider=new Slider( 0f,200f,1f,true,mySkin );
         slider.setSize( (float) (slider.getWidth()*1.5),Gdx.graphics.getHeight()-row_height );
         slider.setPosition( col_width/4,row_height/2 );
         slider.setValue( 200f );
-        left.setPosition( col_width,row_height/2 );
+       /* left.setPosition( col_width,row_height/2 );
         left.setSize( col_width,row_height );
         right.setPosition( Gdx.graphics.getWidth()-col_width*2,row_height/2 );
         right.setSize( col_width,row_height );
         stage.addActor(left);
-        stage.addActor(right);
+        stage.addActor(right);*/
         stage.addActor( slider );
     }
     static void render(){

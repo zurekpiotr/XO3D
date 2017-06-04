@@ -30,6 +30,7 @@ public class GdxGame extends Game
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         Gdx.gl.glClearColor(1.0f , 0.95f , 0.95f , 0f);
         
+        
         screen.render(Gdx.graphics.getDeltaTime());
     }
     
